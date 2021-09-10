@@ -5,8 +5,7 @@ from rest_framework import routers
 
 # Modules
 from .views import hello_data, ProductViewSet, BillViewSet
-
-router = routers.DefaultRouter()
+from .router import router
 
 
 urlpatterns = [
