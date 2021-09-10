@@ -9,6 +9,5 @@ from .router import router
 
 
 urlpatterns = [
-    path("hello", hello_data),
     path("", include(router.urls))
 ]
