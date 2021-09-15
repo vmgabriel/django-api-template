@@ -3,5 +3,5 @@ Django==3.2.7
 django-filter==2.4.0
 djangorestframework==3.12.4
 Markdown==3.3.4
-djangorestframework-jwt==1.11.0
+drf-jwt==1.19.1
 django-versatileimagefield==2.2
