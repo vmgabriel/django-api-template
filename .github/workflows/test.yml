@@ -1,4 +1,4 @@
-name: Couverage of Code
+name: Coverage of Code
 
 on: [pull_request, push, workflow_dispatch]
 
