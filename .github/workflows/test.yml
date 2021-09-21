@@ -1,0 +1,34 @@
+name: Couverage of Code
+
+on: 
+  pull_request:
+      branches: 
+        - *
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Django Testing project
+      env:
+        SECRET_KEY: "the secret key"
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        python3 manage.py makemigrations
+        python3 manage.py migrate
+        python3 manage.py test
