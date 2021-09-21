@@ -1,9 +1,6 @@
 name: Couverage of Code
 
-on: 
-  pull_request:
-      branches: 
-        - *
+on: [pull_request, push, workflow_dispatch]
 
 jobs:
   build:
