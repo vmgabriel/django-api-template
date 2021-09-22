@@ -16,9 +16,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = env("SECRET_KEY")
 
-DEBUG = env("DEBUG", default=True)
+DEBUG = env("DEBUG", default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
 
 
 USER_APPLICATIONS = [
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
 
     "rest_framework",
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -91,10 +93,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": env.db(),
+    "extra": env.db("SQLITE_URL", default="sqlite:////tmp/my_db.sqlite3"),
 }
 
 
@@ -184,3 +184,6 @@ JWT_AUTH = {
     "JWT_IMPERSONATION_COOKIE": None,
     "JWT_DELETE_STALE_BLACKLISTED_TOKENS": False,
 }
+
+WHITENOISE_USE_FINDERS = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
