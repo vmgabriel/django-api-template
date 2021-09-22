@@ -23,8 +23,9 @@ jobs:
         pip install -r requirements.txt
     - name: Django Testing project
       env:
-        SECRET_KEY: "the secret key"
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        MODE: ${{ secrets.MODE }}
       run: |
         python3 manage.py makemigrations
         python3 manage.py migrate

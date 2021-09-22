@@ -2,6 +2,7 @@
 
 import os
 import environ
+import django_heroku
 from pathlib import Path
 from datetime import timedelta
 
@@ -17,6 +18,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env("DEBUG", default=False)
+MODE = (env("MODE", default="production")).lower()
 
 ALLOWED_HOSTS = ["127.0.0.1", ".herokuapp.com"]
 
@@ -189,3 +191,10 @@ JWT_AUTH = {
 
 WHITENOISE_USE_FINDERS = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Django Heroku
+print(f"MODE - {MODE}")
+
+
+if MODE == "production":
+    django_heroku.settings(locals())
